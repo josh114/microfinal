@@ -1,0 +1,44 @@
+version: 2.1
+
+jobs:
+  lint-app:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+  build-docker:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Build docker container for each microservices
+          command: |
+            echo "--------- Installing dependencies-----------"
+            sudo curl -LO https://nodejs.org/dist/v13.0.0/node-v13.0.0-linux-x64.tar.xz
+            sudo tar -xvf node-v13.0.0-linux-x64.tar.xz
+            sudo cp -r node-v13.0.0-linux-x64/{bin,include,lib,share} /usr/
+            node --version => v13.0.0
+            sudo apt install nodejs
+            echo "--------- The images is Building ------------"
+            docker build -t api-feed ./api-feed
+            docker tag api-feed josh114/api-feed:v1
+            docker build -t api-user ./api-user
+            docker tag api-user josh114/api-user:v1
+            docker build -t frontend ./frontend
+            docker tag frontend josh114/frontend:v1
+            docker build -t reverseproxy ./reverseproxy
+            docker tag reverseproxy josh114/reverseproxy:v1
+            echo "-------- All images succesfully built----------"
+            echo " ------- login in to hub--------"
+            docker login -u josh114 -p $DOCKERPASS
+            echo "-------------- Pushing images to dockerhub-------"
+            docker push josh114/api-feed:v1
+            docker push josh114/api-user:v1
+            docker push josh114/frontend:v1
+            docker push josh114/reverseproxy:v1
+workflows:
+  default:
+    jobs:
+      - lint-app
+      - build-docker:
+          requires: [lint-app]
