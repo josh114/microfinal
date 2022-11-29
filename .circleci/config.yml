@@ -20,22 +20,25 @@ jobs:
             node --version => v13.0.0
             sudo apt install nodejs
             echo "--------- The images is Building ------------"
-            docker build -t api-feed ./api-feed
-            docker tag api-feed josh114/api-feed:v1
-            docker build -t api-user ./api-user
-            docker tag api-user josh114/api-user:v1
-            docker build -t frontend ./frontend
-            docker tag frontend josh114/frontend:v1
-            docker build -t reverseproxy ./reverseproxy
-            docker tag reverseproxy josh114/reverseproxy:v1
+            docker build -t udagram-api ./udagram-api
+            docker tag udagram-api josh114/udagram-api:v10
+            docker build -t udagram-api-feed ./udagram-api-feed
+            docker tag udagram-api-feed josh114/udagram-api-feed:v10
+            docker build -t udagram-api-user ./udagram-api-user
+            docker tag udagram-api-user josh114/udagram-api-user:v10
+            docker build -t udagram-frontend ./udagram-frontend
+            docker tag udagram-frontend josh114/udagram-frontend:v10
+            docker build -t udagram-reverseproxy ./udagram-reverseproxy
+            docker tag udagram-reverseproxy josh114/udagram-reverseproxy:v10
             echo "-------- All images succesfully built----------"
             echo " ------- login in to hub--------"
             docker login -u josh114 -p $DOCKERPASS
             echo "-------------- Pushing images to dockerhub-------"
-            docker push josh114/api-feed:v1
-            docker push josh114/api-user:v1
-            docker push josh114/frontend:v1
-            docker push josh114/reverseproxy:v1
+            docker push josh114/udagram-api-feed:v10
+            docker push josh114/udagram-api:v10
+            docker push josh114/udagram-api-user:v10
+            docker push josh114/udagram-frontend:v10
+            docker push josh114/udagram-reverseproxy:v10
 workflows:
   default:
     jobs:
