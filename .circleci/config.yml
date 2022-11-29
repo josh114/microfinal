@@ -25,7 +25,7 @@ jobs:
             docker build -t udagram-api-feed ./udagram-api-feed
             docker tag udagram-api-feed josh114/udagram-api-feed:v11
             docker build -t udagram-api-user ./udagram-api-user
-            docker tag udagram-api-user josh114/udagram-api-user:v11
+            docker tag udagram-api-user josh114/udagram-api-user:v12
             docker build -t udagram-frontend ./udagram-frontend
             docker tag udagram-frontend josh114/udagram-frontend:v11
             docker build -t udagram-reverseproxy ./udagram-reverseproxy
@@ -36,7 +36,7 @@ jobs:
             echo "-------------- Pushing images to dockerhub-------"
             docker push josh114/udagram-api-feed:v11
             docker push josh114/udagram-api:v11
-            docker push josh114/udagram-api-user:v11
+            docker push josh114/udagram-api-user:v12
             docker push josh114/udagram-frontend:v11
             docker push josh114/udagram-reverseproxy:v11
 workflows:
